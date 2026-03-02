@@ -176,6 +176,31 @@ async function cargarHistorial() {
     if(contador) contador.innerText = `S/ ${sumaTotal.toFixed(2)}`;
 }
 
+async function guardarPlana(estado) {
+    const inputPlaca = document.getElementById('placaPlana');
+    const placa = inputPlaca.value.trim().toUpperCase();
+
+    if(!placa) return alert("¡Nicolás, falta la placa!");
+
+    // Solo enviamos placa y estado. La fecha y el precio (25) los pone Supabase solos. [cite: 2026-03-02]
+    const { data, error } = await _supabase
+        .from('tarifas_planas')
+        .insert([{ 
+            placa: placa, 
+            estado_pago: estado 
+        }])
+        .select()
+        .single();
+
+    if(!error) {
+        alert(`✅ Registrada Tarifa Plana: ${placa} (S/ 25.00)`);
+        inputPlaca.value = "";
+        cargarTablaPlanas(); // Refresca tu lista visual
+    } else {
+        alert("Error al guardar: " + error.message);
+    }
+}
+
 window.addEventListener('keydown', (e) => {
     if(e.key === "Enter" && document.activeElement.id === "placaInput") procesarEntrada();
     if(e.key === "Enter" && document.activeElement.id === "codigoSalida") buscarTicketSalida();

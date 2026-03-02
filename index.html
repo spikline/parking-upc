@@ -8,6 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 </head>
 <body class="bg-slate-50 flex flex-col lg:flex-row h-screen overflow-hidden text-slate-700 font-['Inter']">
 
@@ -152,6 +153,60 @@
                         </thead>
                         <tbody id="tabla-historial"></tbody>
                     </table>
+                </div>
+            </section>
+
+            <section id="sec-tarifa" class="view-section hidden space-y-6">
+                <div class="grid grid-cols-12 gap-6 lg:gap-10">
+                    <div class="col-span-12 lg:col-span-5 bg-white p-6 lg:p-10 rounded-[2rem] lg:rounded-[2.5rem] shadow-sm border border-slate-200">
+                        <h3 class="text-xl font-black mb-6 italic uppercase text-blue-600">Nueva Tarifa Plana (S/ 25)</h3>
+                        <div class="space-y-4">
+                            <input id="placaPlana" type="text" placeholder="INGRESE PLACA" class="w-full p-6 bg-slate-50 border-2 border-slate-100 rounded-2xl text-4xl font-black text-center uppercase focus:border-blue-500 outline-none shadow-inner">
+                            <div class="grid grid-cols-2 gap-4">
+                                <button onclick="guardarPlana('pagado')" class="py-5 bg-green-600 text-white rounded-2xl font-black uppercase italic shadow-lg active:scale-95">Ya Pagó</button>
+                                <button onclick="guardarPlana('pendiente')" class="py-5 bg-slate-800 text-white rounded-2xl font-black uppercase italic shadow-lg active:scale-95">Por Pagar</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-span-12 lg:col-span-7 bg-white p-6 lg:p-10 rounded-[2rem] lg:rounded-[2.5rem] shadow-sm border border-slate-200">
+                        <h3 class="text-xl font-black mb-6 italic uppercase">Planas del Día</h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left min-w-[450px]">
+                                <thead>
+                                    <tr class="text-[10px] font-black text-slate-400 uppercase border-b italic">
+                                        <th class="p-4">Vehículo</th>
+                                        <th class="p-4">Estado</th>
+                                        <th class="p-4 text-right">Acción</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tabla-planas-body"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="sec-estadisticas" class="view-section hidden space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100">
+                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 italic">Promedio Diario</p>
+                        <h4 id="stat-promedio" class="text-3xl font-black text-blue-600 italic">S/ 0.00</h4>
+                    </div>
+                    <div class="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100">
+                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 italic">Día más Rentable</p>
+                        <h4 id="stat-mejor-dia" class="text-3xl font-black text-green-600 italic">---</h4>
+                    </div>
+                    <div class="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100">
+                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 italic">Vehículos del Mes</p>
+                        <h4 id="stat-total-vehiculos" class="text-3xl font-black text-slate-800 italic">0</h4>
+                    </div>
+                </div>
+                <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-200">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-black text-slate-800 italic uppercase">Flujo de Ingresos (Soles)</h3>
+                        <span class="text-[10px] bg-blue-100 text-blue-600 px-3 py-1 rounded-full font-black">ÚLTIMOS 30 DÍAS</span>
+                    </div>
+                    <div id="chart-ingresos" class="w-full"></div>
                 </div>
             </section>
         </div>
