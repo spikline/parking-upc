@@ -23,7 +23,7 @@ async function navegar(vista) {
     if (vista === 'ingresos-dia') cargarHistorial();
 }
 
-// INGRESO
+// REGISTRO DE ENTRADA
 async function procesarEntrada() {
     const el = document.getElementById('placaInput');
     const placa = el.value.trim().toUpperCase();
@@ -49,7 +49,7 @@ function finalizarImpresion() {
     document.getElementById('placaInput').focus();
 }
 
-// SALIDA POR CÓDIGO
+// BÚSQUEDA PARA SALIDA
 async function buscarTicketSalida() {
     const id = document.getElementById('codigoSalida').value.trim();
     if(!id) return;
@@ -61,48 +61,50 @@ async function buscarTicketSalida() {
     const h = Math.floor(diffMs / 3600000);
     const m = Math.floor((diffMs % 3600000) / 60000);
     const s = Math.floor((diffMs % 60000) / 1000);
-    let monto = (Math.floor(diffMs / 60000) > 15) ? Math.ceil((Math.floor(diffMs / 60000) - 15) / 60) * 5 : 0;
+    
+    // Tarifa: S/ 5.00 con 15 min de tolerancia
+    let montoCalculado = (Math.floor(diffMs / 60000) > 15) ? Math.ceil((Math.floor(diffMs / 60000) - 15) / 60) * 5 : 0;
 
     document.getElementById('res-tiempo').innerText = `${h}h ${m}m ${s}s`;
-    document.getElementById('res-monto').innerText = `S/ ${monto}.00`;
+    document.getElementById('res-monto').innerText = `S/ ${montoCalculado}.00`;
     document.getElementById('panelResultadoSalida').classList.remove('hidden');
     document.getElementById('btnBuscarSalida').classList.add('hidden');
     document.getElementById('btnFinalizarSalida').classList.remove('hidden');
     document.getElementById('btnFinalizarSalida').focus();
 }
 
-// COBRAR DESDE TABLA O BUSCADOR
+// CONFIRMACIÓN DE COBRO (Actualiza la tabla con los nombres correctos)
 async function confirmarSalidaFinal() {
+    if(!ticketActivoSalida) return;
     const salida = new Date();
     const diffMs = salida - new Date(ticketActivoSalida.fecha_entrada);
-    const monto = (Math.floor(diffMs / 60000) > 15) ? Math.ceil((Math.floor(diffMs / 60000) - 15) / 60) * 5 : 0;
+    const montoFinal = (Math.floor(diffMs / 60000) > 15) ? Math.ceil((Math.floor(diffMs / 60000) - 15) / 60) * 5 : 0;
 
+    // Ajustado a los nombres de tu tabla de Supabase: fecha_salida y monto
     const { error } = await _supabase.from('tickets').update({ 
         fecha_salida: salida.toISOString(), 
-        monto_total: monto 
+        monto: montoFinal 
     }).eq('id', ticketActivoSalida.id);
 
     if(!error) { 
-        generarBoletaSalida(ticketActivoSalida, salida, monto, diffMs); 
+        generarBoletaSalida(ticketActivoSalida, salida, montoFinal, diffMs); 
     }
 }
 
-// Nueva función para el botón "Cobrar" de la tabla
+// LÓGICA PARA BOTÓN "COBRAR" DE LA TABLA
 async function liberar(placa, id, entradaStr) {
     const entrada = new Date(entradaStr);
     const salida = new Date();
     const diffMs = salida - entrada;
-    const diffMin = Math.floor(diffMs / 60000);
-    let monto = (diffMin > 15) ? Math.ceil((diffMin - 15) / 60) * 5 : 0;
+    let montoFinal = (Math.floor(diffMs / 60000) > 15) ? Math.ceil((Math.floor(diffMs / 60000) - 15) / 60) * 5 : 0;
 
     const { error } = await _supabase.from('tickets').update({ 
         fecha_salida: salida.toISOString(), 
-        monto_total: monto 
+        monto: montoFinal 
     }).eq('id', id);
 
     if(!error) {
-        const tempObj = { id, placa, fecha_entrada: entradaStr };
-        generarBoletaSalida(tempObj, salida, monto, diffMs);
+        generarBoletaSalida({id, placa, fecha_entrada: entradaStr}, salida, montoFinal, diffMs);
         cargarEnCochera();
     }
 }
@@ -118,6 +120,7 @@ function generarBoletaSalida(datos, fechaOut, monto, ms) {
     document.getElementById('b-hora-out').innerText = fechaOut.toLocaleTimeString();
     document.getElementById('b-tiempo').innerText = `${h}h ${m}m ${s}s`;
     document.getElementById('b-monto').innerText = `S/ ${monto}.00`;
+    
     document.getElementById('apartado-boleta').classList.remove('hidden');
     document.getElementById('btnImprimirBoleta').focus();
 }
@@ -125,8 +128,8 @@ function generarBoletaSalida(datos, fechaOut, monto, ms) {
 function imprimirBoletaFinal() {
     window.print();
     document.getElementById('apartado-boleta').classList.add('hidden');
-    cargarHistorial(); // Refresca ingresos del día y contador
-    cargarEnCochera(); // Refresca lista actual
+    cargarHistorial(); 
+    cargarEnCochera();
     resetearSalida();
 }
 
@@ -142,12 +145,11 @@ function resetearSalida() {
 async function cargarEnCochera() {
     const { data } = await _supabase.from('tickets').select('*').is('fecha_salida', null).order('fecha_entrada', { ascending: false });
     const tabla = document.getElementById('tabla-adentro');
-    // Actualizamos la tabla para que use la función liberar() con el botón
     tabla.innerHTML = data.map(t => `
         <tr class="border-b font-medium italic">
-            <td class="p-5 font-black text-blue-800 text-2xl tracking-tighter italic uppercase">${t.placa}</td>
+            <td class="p-5 font-black text-blue-800 text-2xl tracking-tighter uppercase italic">${t.placa}</td>
             <td class="p-5 text-center font-mono italic text-slate-500">${new Date(t.fecha_entrada).toLocaleTimeString()}</td>
-            <td class="p-5 text-right italic font-black text-blue-400">
+            <td class="p-5 text-right font-black text-blue-400">
                 <button onclick="liberar('${t.placa}', ${t.id}, '${t.fecha_entrada}')" class="bg-red-500 text-white px-4 py-2 rounded-xl text-xs font-black hover:bg-red-700 shadow-md uppercase italic tracking-widest mr-4">Cobrar</button>
                 ID: ${t.id}
             </td>
@@ -160,17 +162,16 @@ async function cargarHistorial() {
     let sumaTotal = 0;
 
     tabla.innerHTML = data.map(t => {
-        sumaTotal += (t.monto_total || 0);
+        sumaTotal += (t.monto || 0);
         return `
             <tr class="border-b text-sm italic font-medium">
-                <td class="p-5 font-black text-slate-800 uppercase text-lg italic tracking-tighter font-black">${t.placa}</td>
+                <td class="p-5 font-black text-slate-800 uppercase text-lg italic tracking-tighter">${t.placa}</td>
                 <td class="p-5 text-slate-400 font-mono italic">${new Date(t.fecha_entrada).toLocaleTimeString()}</td>
                 <td class="p-5 text-slate-400 font-mono italic">${new Date(t.fecha_salida).toLocaleTimeString()}</td>
-                <td class="p-5 text-right font-black text-green-600 text-xl tracking-tighter italic">S/ ${t.monto_total}.00</td>
+                <td class="p-5 text-right font-black text-green-600 text-xl tracking-tighter italic">S/ ${t.monto}.00</td>
             </tr>`;
     }).join('');
 
-    // Actualizamos el contador de recaudación
     const contador = document.getElementById('totalGanadoDia');
     if(contador) contador.innerText = `S/ ${sumaTotal.toFixed(2)}`;
 }
