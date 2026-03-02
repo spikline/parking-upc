@@ -1,12 +1,5 @@
-/* Importamos la fuente Inter para un look más moderno */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
-
-body {
-    font-family: 'Inter', sans-serif;
-    -webkit-font-smoothing: antialiased;
-}
-
-/* Animación suave para los paneles */
-.transition-all {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+body { font-family: 'Inter', sans-serif; }
+.view-section { animation: slideUp 0.4s ease-out; }
+@keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.hidden { display: none !important; }
