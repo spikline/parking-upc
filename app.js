@@ -71,13 +71,40 @@ async function buscarTicketSalida() {
     document.getElementById('btnFinalizarSalida').focus();
 }
 
+// COBRAR DESDE TABLA O BUSCADOR
 async function confirmarSalidaFinal() {
     const salida = new Date();
     const diffMs = salida - new Date(ticketActivoSalida.fecha_entrada);
     const monto = (Math.floor(diffMs / 60000) > 15) ? Math.ceil((Math.floor(diffMs / 60000) - 15) / 60) * 5 : 0;
 
-    const { error } = await _supabase.from('tickets').update({ fecha_salida: salida.toISOString(), monto_total: monto }).eq('id', ticketActivoSalida.id);
-    if(!error) { generarBoletaSalida(ticketActivoSalida, salida, monto, diffMs); }
+    const { error } = await _supabase.from('tickets').update({ 
+        fecha_salida: salida.toISOString(), 
+        monto_total: monto 
+    }).eq('id', ticketActivoSalida.id);
+
+    if(!error) { 
+        generarBoletaSalida(ticketActivoSalida, salida, monto, diffMs); 
+    }
+}
+
+// Nueva función para el botón "Cobrar" de la tabla
+async function liberar(placa, id, entradaStr) {
+    const entrada = new Date(entradaStr);
+    const salida = new Date();
+    const diffMs = salida - entrada;
+    const diffMin = Math.floor(diffMs / 60000);
+    let monto = (diffMin > 15) ? Math.ceil((diffMin - 15) / 60) * 5 : 0;
+
+    const { error } = await _supabase.from('tickets').update({ 
+        fecha_salida: salida.toISOString(), 
+        monto_total: monto 
+    }).eq('id', id);
+
+    if(!error) {
+        const tempObj = { id, placa, fecha_entrada: entradaStr };
+        generarBoletaSalida(tempObj, salida, monto, diffMs);
+        cargarEnCochera();
+    }
 }
 
 function generarBoletaSalida(datos, fechaOut, monto, ms) {
@@ -98,6 +125,8 @@ function generarBoletaSalida(datos, fechaOut, monto, ms) {
 function imprimirBoletaFinal() {
     window.print();
     document.getElementById('apartado-boleta').classList.add('hidden');
+    cargarHistorial(); // Refresca ingresos del día y contador
+    cargarEnCochera(); // Refresca lista actual
     resetearSalida();
 }
 
@@ -107,22 +136,50 @@ function resetearSalida() {
     document.getElementById('btnBuscarSalida').classList.remove('hidden');
     document.getElementById('btnFinalizarSalida').classList.add('hidden');
     document.getElementById('placaInput').focus();
+    ticketActivoSalida = null;
 }
 
 async function cargarEnCochera() {
     const { data } = await _supabase.from('tickets').select('*').is('fecha_salida', null).order('fecha_entrada', { ascending: false });
     const tabla = document.getElementById('tabla-adentro');
-    tabla.innerHTML = data.map(t => `<tr class="border-b font-medium italic"><td class="p-5 font-black text-blue-800 text-2xl">${t.placa}</td><td class="p-5 text-center font-mono italic text-slate-500">${new Date(t.fecha_entrada).toLocaleTimeString()}</td><td class="p-5 text-right font-black text-blue-400">ID: ${t.id}</td></tr>`).join('');
+    // Actualizamos la tabla para que use la función liberar() con el botón
+    tabla.innerHTML = data.map(t => `
+        <tr class="border-b font-medium italic">
+            <td class="p-5 font-black text-blue-800 text-2xl tracking-tighter italic uppercase">${t.placa}</td>
+            <td class="p-5 text-center font-mono italic text-slate-500">${new Date(t.fecha_entrada).toLocaleTimeString()}</td>
+            <td class="p-5 text-right italic font-black text-blue-400">
+                <button onclick="liberar('${t.placa}', ${t.id}, '${t.fecha_entrada}')" class="bg-red-500 text-white px-4 py-2 rounded-xl text-xs font-black hover:bg-red-700 shadow-md uppercase italic tracking-widest mr-4">Cobrar</button>
+                ID: ${t.id}
+            </td>
+        </tr>`).join('');
 }
 
 async function cargarHistorial() {
     const { data } = await _supabase.from('tickets').select('*').not('fecha_salida', 'is', null).order('fecha_salida', { ascending: false });
     const tabla = document.getElementById('tabla-historial');
-    tabla.innerHTML = data.map(t => `<tr class="border-b text-sm italic font-medium"><td class="p-5 font-black text-slate-800 uppercase text-lg italic tracking-tighter">${t.placa}</td><td class="p-5 text-slate-400 font-mono italic">${new Date(t.fecha_entrada).toLocaleTimeString()}</td><td class="p-5 text-slate-400 font-mono italic">${new Date(t.fecha_salida).toLocaleTimeString()}</td><td class="p-5 text-right font-black text-green-600 text-xl tracking-tighter italic">S/ ${t.monto_total}.00</td></tr>`).join('');
+    let sumaTotal = 0;
+
+    tabla.innerHTML = data.map(t => {
+        sumaTotal += (t.monto_total || 0);
+        return `
+            <tr class="border-b text-sm italic font-medium">
+                <td class="p-5 font-black text-slate-800 uppercase text-lg italic tracking-tighter font-black">${t.placa}</td>
+                <td class="p-5 text-slate-400 font-mono italic">${new Date(t.fecha_entrada).toLocaleTimeString()}</td>
+                <td class="p-5 text-slate-400 font-mono italic">${new Date(t.fecha_salida).toLocaleTimeString()}</td>
+                <td class="p-5 text-right font-black text-green-600 text-xl tracking-tighter italic">S/ ${t.monto_total}.00</td>
+            </tr>`;
+    }).join('');
+
+    // Actualizamos el contador de recaudación
+    const contador = document.getElementById('totalGanadoDia');
+    if(contador) contador.innerText = `S/ ${sumaTotal.toFixed(2)}`;
 }
 
 window.addEventListener('keydown', (e) => {
     if(e.key === "Enter" && document.activeElement.id === "placaInput") procesarEntrada();
     if(e.key === "Enter" && document.activeElement.id === "codigoSalida") buscarTicketSalida();
-    if(e.key === "Escape") { document.getElementById('apartado-ticket').classList.add('hidden'); document.getElementById('apartado-boleta').classList.add('hidden'); }
+    if(e.key === "Escape") { 
+        document.getElementById('apartado-ticket').classList.add('hidden'); 
+        document.getElementById('apartado-boleta').classList.add('hidden'); 
+    }
 });
