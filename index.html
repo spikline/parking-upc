@@ -1,10 +1,86 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Prueba de Vida</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parking UPC - Tarifario Dinámico</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        body { font-family: sans-serif; text-align: center; padding: 20px; background: #f4f7f6; }
+        .box { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        input { width: 80%; padding: 12px; font-size: 20px; margin-bottom: 10px; text-transform: uppercase; }
+        button { width: 85%; padding: 12px; font-size: 16px; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        .btn-ingreso { background: #28a745; }
+        .btn-salida { background: #dc3545; margin-top: 10px; }
+    </style>
 </head>
-<body style="background: yellow; text-align: center;">
-    <h1>HOLA NICOLAS, LA WEB FUNCIONA</h1>
-    <p>Si ves este fondo amarillo, Vercel está actualizando bien.</p>
+<body>
+
+    <div class="box">
+        <h2>📥 Entrada</h2>
+        <input type="text" id="placaInput" placeholder="ABC-123">
+        <button class="btn-ingreso" onclick="registrarEntrada()">REGISTRAR INGRESO</button>
+    </div>
+
+    <div class="box">
+        <h2>📤 Salida y Cobro</h2>
+        <input type="text" id="placaSalida" placeholder="ABC-123">
+        <button class="btn-salida" onclick="procesarSalida()">CALCULAR Y SALIR</button>
+        <div id="resultado" style="margin-top:15px; font-weight:bold; font-size:18px;"></div>
+    </div>
+
+    <script>
+        const URL_DB = 'https://jwdmfrqkjdgzzggkiipt.supabase.co';
+        const KEY_DB = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3ZG1mcnFramRnenpnZ2tpaXB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI0MjAzMzQsImV4cCI6MjA4Nzk5NjMzNH0.6ikNM6UWV2wnovIq4lo79tQpUX4rt3a66q5nTYZT9gY';
+        const _supabase = supabase.createClient(URL_DB, KEY_DB);
+
+        // 1. REGISTRAR ENTRADA
+        async function registrarEntrada() {
+            const placa = document.getElementById('placaInput').value.trim().toUpperCase();
+            if(!placa) return alert("Ingresa placa");
+
+            const { error } = await _supabase.from('tickets').insert([{ placa, fecha_entrada: new Date().toISOString() }]);
+            if (error) alert("Error: " + error.message);
+            else { alert("Entrada registrada: " + placa); document.getElementById('placaInput').value = ""; }
+        }
+
+        // 2. PROCESAR SALIDA Y CALCULAR MONTO
+        async function procesarSalida() {
+            const placa = document.getElementById('placaSalida').value.trim().toUpperCase();
+            const resDiv = document.getElementById('resultado');
+
+            // Buscar el último registro de esa placa que no tenga fecha de salida
+            const { data, error } = await _supabase
+                .from('tickets')
+                .select('*')
+                .eq('placa', placa)
+                .is('fecha_salida', null)
+                .single();
+
+            if (error || !data) { alert("Vehículo no encontrado o ya salió."); return; }
+
+            const entrada = new Date(data.fecha_entrada);
+            const salida = new Date();
+            const diferenciaMs = salida - entrada;
+            const minutosTotales = Math.floor(diferenciaMs / 60000);
+
+            let monto = 0;
+            if (minutosTotales > 15) {
+                // Lógica: 15 min gratis, luego 5 soles por cada hora (o fracción)
+                monto = Math.ceil((minutosTotales - 15) / 60) * 5;
+            }
+
+            // Actualizar en la base de datos
+            const { error: errorUpd } = await _supabase
+                .from('tickets')
+                .update({ fecha_salida: salida.toISOString(), monto_total: monto })
+                .eq('id', data.id);
+
+            if (!errorUpd) {
+                resDiv.innerHTML = `TIEMPO: ${minutosTotales} min <br> <span style="color:red;">COBRAR: S/ ${monto}.00</span>`;
+                document.getElementById('placaSalida').value = "";
+            }
+        }
+    </script>
 </body>
 </html>
