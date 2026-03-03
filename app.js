@@ -201,6 +201,62 @@ async function guardarPlana(estado) {
     }
 }
 
+async function registrarAbonado() {
+    const placa = document.getElementById('placaAbonado').value.trim().toUpperCase();
+    const datos = document.getElementById('datosAbonado').value.trim();
+    
+    if(!placa) return alert("¡Nicolás, ingresa la placa!");
+
+    const fechaPago = new Date();
+    const fechaVence = new Date();
+    fechaVence.setDate(fechaPago.getDate() + 31); // Suma automática de 31 días
+
+    const { error } = await _supabase.from('abonados').upsert({ 
+        placa: placa,
+        datos_extra: datos,
+        fecha_pago: fechaPago.toISOString(),
+        fecha_vencimiento: fechaVence.toISOString()
+    });
+
+    if(!error) {
+        alert(`✅ ${placa} renovado por 31 días`);
+        document.getElementById('placaAbonado').value = "";
+        document.getElementById('datosAbonado').value = "";
+        cargarAbonados();
+    }
+}
+
+async function cargarAbonados() {
+    const { data } = await _supabase.from('abonados').select('*').order('fecha_vencimiento', { ascending: true });
+    const tbody = document.getElementById('tabla-abonados-body');
+    const ahora = new Date();
+
+    tbody.innerHTML = data.map(a => {
+        const vence = new Date(a.fecha_vencimiento);
+        const diffTiempo = vence - ahora;
+        const diffDias = Math.ceil(diffTiempo / (1000 * 60 * 60 * 24));
+        
+        // Alerta roja si faltan 3 días o ya venció
+        const estadoRojo = diffDias <= 3;
+
+        return `
+            <tr class="border-b ${estadoRojo ? 'bg-red-50' : 'hover:bg-slate-50'} transition-all">
+                <td class="p-5 font-black text-2xl italic text-slate-800">${a.placa}</td>
+                <td class="p-5 text-xs font-bold text-slate-500 max-w-[200px] truncate">
+                    ${a.datos_extra || '<span class="italic opacity-30 text-[9px]">Sin datos</span>'}
+                </td>
+                <td class="p-5 font-black ${estadoRojo ? 'text-red-600 animate-pulse' : 'text-blue-600'}">
+                    ${diffDias > 0 ? `${diffDias} días restantes` : '¡VENCIDO!'}
+                </td>
+                <td class="p-5 text-right">
+                    <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase ${estadoRojo ? 'bg-red-600 text-white shadow-md' : 'bg-green-100 text-green-600'}">
+                        ${estadoRojo ? 'Cobrar S/ 450' : 'Vigente'}
+                    </span>
+                </td>
+            </tr>`;
+    }).join('');
+}
+
 window.addEventListener('keydown', (e) => {
     if(e.key === "Enter" && document.activeElement.id === "placaInput") procesarEntrada();
     if(e.key === "Enter" && document.activeElement.id === "codigoSalida") buscarTicketSalida();
