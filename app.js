@@ -89,19 +89,42 @@ function finalizarImpresion() {
 async function buscarTicketSalida() {
     const id = document.getElementById('codigoSalida').value.trim();
     if(!id) return;
-    const { data, error } = await _supabase.from('tickets').select('*').eq('id', id).is('fecha_salida', null).single();
+
+    const { data, error } = await _supabase
+        .from('tickets')
+        .select('*')
+        .eq('id', id)
+        .is('fecha_salida', null)
+        .single();
+
     if(error || !data) return alert("❌ Ticket no encontrado o ya salió");
 
     ticketActivoSalida = data;
-    const diffMs = new Date() - new Date(data.fecha_entrada);
+    const ahora = new Date();
+    const entrada = new Date(data.fecha_entrada);
+    const diffMs = ahora - entrada;
+
+    // Cálculos de tiempo [cite: 2026-03-04]
     const h = Math.floor(diffMs / 3600000);
     const m = Math.floor((diffMs % 3600000) / 60000);
     const s = Math.floor((diffMs % 60000) / 1000);
     
-    let montoCalculado = (Math.floor(diffMs / 60000) > 15) ? Math.ceil((Math.floor(diffMs / 60000) - 15) / 60) * 5 : 0;
+    // Tarifa S/ 5.00 con 15 min de tolerancia [cite: 2026-03-04]
+    let montoCalculado = (Math.floor(diffMs / 60000) > 15) ? 
+        Math.ceil((Math.floor(diffMs / 60000) - 15) / 60) * 5 : 0;
 
+    // LLENAR TODOS LOS DATOS (MEJORA) [cite: 2026-03-04]
+    document.getElementById('res-placa').innerText = data.placa;
+    document.getElementById('res-fecha-in').innerText = entrada.toLocaleDateString();
+    document.getElementById('res-hora-in').innerText = entrada.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    
+    document.getElementById('res-fecha-out').innerText = ahora.toLocaleDateString();
+    document.getElementById('res-hora-out').innerText = ahora.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    
     document.getElementById('res-tiempo').innerText = `${h}h ${m}m ${s}s`;
     document.getElementById('res-monto').innerText = `S/ ${montoCalculado}.00`;
+
+    // Animación y cambios de botones
     document.getElementById('panelResultadoSalida').classList.remove('hidden');
     document.getElementById('btnBuscarSalida').classList.add('hidden');
     document.getElementById('btnFinalizarSalida').classList.remove('hidden');
