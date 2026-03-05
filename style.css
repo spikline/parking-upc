@@ -1,5 +1,80 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700;1,800;1,900&display=swap');
+
 body { font-family: 'Inter', sans-serif; }
-.view-section { animation: slideUp 0.4s ease-out; }
-@keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Animación de vistas */
+.view-section { animation: slideUp 0.35s cubic-bezier(0.22, 1, 0.36, 1); }
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
 .hidden { display: none !important; }
+
+/* Nav activo */
+.btn-nav.active-nav {
+    background: rgba(255,255,255,0.2) !important;
+    border: 1px solid rgba(255,255,255,0.3) !important;
+    color: white !important;
+    font-weight: 700 !important;
+}
+
+/* Filas de tabla */
+tbody tr {
+    transition: background 0.15s ease;
+}
+tbody tr:hover {
+    background: #f8fafc;
+}
+tbody tr td {
+    border-bottom: 1px solid #f1f5f9;
+}
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Ocultar scrollbar nav móvil */
+nav::-webkit-scrollbar { display: none; }
+nav { scrollbar-width: none; }
+
+/* Inputs focus glow */
+input:focus, textarea:focus {
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+input[type="number"]:focus {
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+}
+
+/* Print */
+@media print {
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    body > aside,
+    body > main,
+    #apartado-ticket .mt-6,
+    #apartado-boleta .mt-6 { display: none !important; }
+    #apartado-ticket,
+    #apartado-boleta {
+        position: static !important;
+        background: white !important;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        padding: 0 !important;
+        inset: auto !important;
+    }
+    #ticket-imprimible,
+    #boleta-imprimible {
+        width: 72mm;
+        margin: 0 auto;
+        border: none !important;
+        box-shadow: none !important;
+        font-size: 11px;
+    }
+    #apartado-ticket > div,
+    #apartado-boleta > div {
+        box-shadow: none !important;
+        border: none !important;
+        padding: 0 !important;
+        max-width: 100% !important;
+    }
+}

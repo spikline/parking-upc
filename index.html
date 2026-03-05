@@ -9,84 +9,99 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700;1,800;1,900&display=swap" rel="stylesheet">
 </head>
-<body class="bg-slate-50 flex flex-col lg:flex-row h-screen overflow-hidden text-slate-700 font-['Inter']">
+<body class="bg-slate-100 flex flex-col lg:flex-row h-screen overflow-hidden text-slate-700" style="font-family:'Inter',sans-serif;">
 
-    <aside class="w-full lg:w-72 bg-[#1e3a8a] text-white flex flex-col shadow-2xl z-10 shrink-0">
-        <div class="p-6 lg:p-8">
-            <div class="flex items-center gap-3">
-                <div class="bg-blue-500 p-2 rounded-lg shadow-lg">
-                    <i data-lucide="parking-square" class="w-6 h-6"></i>
+    <!-- SIDEBAR -->
+    <aside class="w-full lg:w-72 text-white flex flex-col shadow-2xl z-10 shrink-0"
+        style="background: linear-gradient(160deg, #0f172a 0%, #1e3a8a 60%, #1d4ed8 100%);">
+
+        <!-- Logo -->
+        <div class="p-5 lg:p-7 pb-3 lg:pb-4">
+            <div class="flex items-center gap-3 bg-white/10 border border-white/20 rounded-2xl px-4 py-3">
+                <div class="bg-blue-500 p-2 rounded-xl shadow-lg shrink-0">
+                    <i data-lucide="parking-square" class="w-5 h-5"></i>
                 </div>
                 <div>
-                    <h1 class="text-xl font-bold leading-tight uppercase tracking-tighter">Parking Pro</h1>
-                    <p class="text-[10px] text-blue-300 uppercase tracking-widest font-bold italic">450 Espacios</p>
+                    <h1 class="text-base font-black uppercase tracking-tight leading-none">Parking Pro</h1>
+                    <p class="text-[10px] text-blue-300 uppercase tracking-widest font-bold mt-0.5">450 Espacios · Ollaraya</p>
                 </div>
             </div>
         </div>
 
-        <nav class="flex lg:flex-col overflow-x-auto lg:overflow-x-visible px-4 space-x-2 lg:space-x-0 lg:space-y-1 pb-4">
-            <button onclick="navegar('registro')" id="nav-registro" class="btn-nav whitespace-nowrap w-full flex items-center gap-4 px-4 py-3 rounded-xl transition-all font-semibold bg-blue-600 text-white shadow-lg border border-blue-400/30">
-                <i data-lucide="log-in" class="w-5 h-5"></i> Registrar Vehículo
+        <!-- Nav -->
+        <nav class="flex lg:flex-col overflow-x-auto lg:overflow-x-visible px-3 lg:px-4 gap-1 lg:gap-1 pb-3 lg:pb-2 lg:flex-1" style="scrollbar-width:none;">
+            <style>.nav-scroll::-webkit-scrollbar{display:none;}</style>
+            <button onclick="navegar('registro')" id="nav-registro" class="btn-nav whitespace-nowrap w-full flex items-center gap-3 px-3 lg:px-4 py-2.5 lg:py-3 rounded-xl transition-all font-bold text-sm bg-white/20 text-white border border-white/30 shadow-md">
+                <i data-lucide="log-in" class="w-4 h-4 shrink-0"></i> Registrar Vehículo
             </button>
-            <button onclick="navegar('salida')" id="nav-salida" class="btn-nav whitespace-nowrap w-full flex items-center gap-4 px-4 py-3 text-blue-100 hover:bg-blue-700/50 rounded-xl transition-all font-medium">
-                <i data-lucide="log-out" class="w-5 h-5"></i> Salida de Vehículo
+            <button onclick="navegar('salida')" id="nav-salida" class="btn-nav whitespace-nowrap w-full flex items-center gap-3 px-3 lg:px-4 py-2.5 lg:py-3 text-blue-100 hover:bg-white/10 rounded-xl transition-all font-medium text-sm">
+                <i data-lucide="log-out" class="w-4 h-4 shrink-0"></i> Salida de Vehículo
             </button>
-            <button onclick="navegar('ingresados')" id="nav-ingresados" class="btn-nav whitespace-nowrap w-full flex items-center gap-4 px-4 py-3 text-blue-100 hover:bg-blue-700/50 rounded-xl transition-all font-medium">
-                <i data-lucide="car" class="w-5 h-5"></i> Vehículos Ingresados
+            <button onclick="navegar('ingresados')" id="nav-ingresados" class="btn-nav whitespace-nowrap w-full flex items-center gap-3 px-3 lg:px-4 py-2.5 lg:py-3 text-blue-100 hover:bg-white/10 rounded-xl transition-all font-medium text-sm">
+                <i data-lucide="car" class="w-4 h-4 shrink-0"></i> Vehículos Ingresados
             </button>
-            <button onclick="navegar('ingresos-dia')" id="nav-ingresos-dia" class="btn-nav whitespace-nowrap w-full flex items-center gap-4 px-4 py-3 text-blue-100 hover:bg-blue-700/50 rounded-xl transition-all font-medium">
-                <i data-lucide="dollar-sign" class="w-5 h-5"></i> Ingresos del Día
+            <button onclick="navegar('ingresos-dia')" id="nav-ingresos-dia" class="btn-nav whitespace-nowrap w-full flex items-center gap-3 px-3 lg:px-4 py-2.5 lg:py-3 text-blue-100 hover:bg-white/10 rounded-xl transition-all font-medium text-sm">
+                <i data-lucide="dollar-sign" class="w-4 h-4 shrink-0"></i> Ingresos del Día
             </button>
-            <button onclick="navegar('abonados')" id="nav-abonados" class="btn-nav whitespace-nowrap w-full flex items-center gap-4 px-4 py-3 text-blue-100 hover:bg-blue-700/50 rounded-xl transition-all font-medium text-left">
-                <i data-lucide="credit-card" class="w-5 h-5"></i> Abonados
+            <button onclick="navegar('abonados')" id="nav-abonados" class="btn-nav whitespace-nowrap w-full flex items-center gap-3 px-3 lg:px-4 py-2.5 lg:py-3 text-blue-100 hover:bg-white/10 rounded-xl transition-all font-medium text-sm text-left">
+                <i data-lucide="credit-card" class="w-4 h-4 shrink-0"></i> Abonados
             </button>
-            <button onclick="navegar('tarifa')" id="nav-tarifa" class="btn-nav whitespace-nowrap w-full flex items-center gap-4 px-4 py-3 text-blue-100 hover:bg-blue-700/50 rounded-xl transition-all font-medium text-left">
-                <i data-lucide="receipt" class="w-5 h-5"></i> Tarifa Plana
+            <button onclick="navegar('tarifa')" id="nav-tarifa" class="btn-nav whitespace-nowrap w-full flex items-center gap-3 px-3 lg:px-4 py-2.5 lg:py-3 text-blue-100 hover:bg-white/10 rounded-xl transition-all font-medium text-sm text-left">
+                <i data-lucide="receipt" class="w-4 h-4 shrink-0"></i> Tarifa Plana
             </button>
-            <button onclick="navegar('estadisticas')" id="nav-estadisticas" class="btn-nav whitespace-nowrap w-full flex items-center gap-4 px-4 py-3 text-blue-100 hover:bg-blue-700/50 rounded-xl transition-all font-medium text-left">
-                <i data-lucide="bar-chart-3" class="w-5 h-5"></i> Estadísticas
+            <button onclick="navegar('estadisticas')" id="nav-estadisticas" class="btn-nav whitespace-nowrap w-full flex items-center gap-3 px-3 lg:px-4 py-2.5 lg:py-3 text-blue-100 hover:bg-white/10 rounded-xl transition-all font-medium text-sm text-left">
+                <i data-lucide="bar-chart-3" class="w-4 h-4 shrink-0"></i> Estadísticas
             </button>
         </nav>
 
-        <div class="mt-auto p-4 m-4 bg-blue-900/40 rounded-2xl border border-blue-700/30">
-            <p class="text-[10px] text-blue-400 uppercase font-bold mb-3 tracking-widest text-center italic">Estado Cochera</p>
+        <!-- Estado cochera -->
+        <div class="mt-auto p-3 lg:p-4 m-3 lg:m-4 rounded-2xl border border-white/10" style="background:rgba(0,0,0,0.25);">
+            <p class="text-[9px] text-blue-300 uppercase font-black mb-3 tracking-widest text-center">Estado Cochera</p>
             <div class="grid grid-cols-3 gap-2 text-center">
-                <div>
-                    <p class="text-[8px] text-slate-300 uppercase font-black">Libres</p>
-                    <p id="count-disponible" class="text-lg font-black italic text-white">450</p>
+                <div class="bg-white/10 rounded-xl py-2 px-1">
+                    <p class="text-[8px] text-slate-300 uppercase font-black mb-0.5">Libres</p>
+                    <p id="count-disponible" class="text-xl font-black text-white leading-none">450</p>
                 </div>
-                <div>
-                    <p class="text-[8px] text-slate-300 uppercase font-black">Tickets</p>
-                    <p id="count-tickets" class="text-lg font-black italic text-blue-400">0</p>
+                <div class="bg-white/10 rounded-xl py-2 px-1">
+                    <p class="text-[8px] text-slate-300 uppercase font-black mb-0.5">Tickets</p>
+                    <p id="count-tickets" class="text-xl font-black text-yellow-300 leading-none">0</p>
                 </div>
-                <div>
-                    <p class="text-[8px] text-slate-300 uppercase font-black">Abonos</p>
-                    <p id="count-abonados" class="text-lg font-black italic text-green-400">0</p>
+                <div class="bg-white/10 rounded-xl py-2 px-1">
+                    <p class="text-[8px] text-slate-300 uppercase font-black mb-0.5">Abonos</p>
+                    <p id="count-abonados" class="text-xl font-black text-green-300 leading-none">0</p>
                 </div>
             </div>
         </div>
     </aside>
 
-    <main class="flex-1 overflow-y-auto p-4 lg:p-10 bg-[#f8fafc]">
-        <header class="mb-6 lg:mb-10 flex flex-col lg:flex-row justify-between items-start gap-4">
+    <!-- MAIN -->
+    <main class="flex-1 overflow-y-auto p-4 lg:p-10 bg-slate-100">
+
+        <!-- Header -->
+        <header class="mb-6 lg:mb-10 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-3 lg:gap-4">
             <div>
-                <h2 id="tituloVista" class="text-2xl lg:text-4xl font-black text-slate-900 tracking-tighter italic uppercase">Registrar Vehículo</h2>
-                <p id="descVista" class="text-xs lg:text-sm text-slate-500 font-medium italic">Parking Ollaraya</p>
+                <h2 id="tituloVista" class="text-2xl lg:text-4xl font-black text-slate-900 tracking-tighter italic uppercase leading-none">Registrar Vehículo</h2>
+                <p id="descVista" class="text-xs lg:text-sm text-slate-400 font-semibold mt-1">Parking Ollaraya</p>
             </div>
-            <div class="bg-white p-3 lg:p-4 rounded-2xl shadow-sm border border-slate-200 text-center min-w-[120px] lg:min-w-[160px]">
-                <p id="reloj" class="text-lg lg:text-2xl font-black text-blue-600 font-mono tracking-tighter italic">--:--:--</p>
+            <div class="bg-white px-5 py-3 rounded-2xl shadow-sm border border-slate-200 text-center min-w-[120px] lg:min-w-[160px]">
+                <p id="reloj" class="text-lg lg:text-2xl font-black text-blue-600 font-mono tracking-tighter">--:--:--</p>
             </div>
         </header>
 
         <div id="vistas" class="max-w-full">
+
+            <!-- REGISTRO -->
             <section id="sec-registro" class="view-section grid grid-cols-12 gap-6 lg:gap-10">
                 <div class="col-span-12 lg:col-span-7 bg-white p-6 lg:p-10 rounded-[2rem] lg:rounded-[2.5rem] shadow-sm border border-slate-200">
                     <div class="space-y-6 lg:space-y-8">
                         <div>
                             <label class="block text-xs font-black text-slate-400 uppercase tracking-widest mb-4 italic text-center lg:text-left">Placa del Vehículo</label>
                             <input id="placaInput" type="text" placeholder="Ej: ABC-123" maxlength="12"
-                                class="w-full p-4 lg:p-8 bg-slate-50 border-2 border-slate-100 rounded-[1.5rem] lg:rounded-[2rem] text-4xl lg:text-6xl font-mono font-black text-center focus:border-blue-500 focus:bg-white outline-none transition-all uppercase shadow-inner">
+                                class="w-full p-4 lg:p-8 bg-slate-50 border-2 border-slate-200 rounded-[1.5rem] lg:rounded-[2rem] text-4xl lg:text-6xl font-mono font-black text-center focus:border-blue-500 focus:bg-white outline-none transition-all uppercase shadow-inner"
+                                style="letter-spacing:0.06em;">
                         </div>
                         <button onclick="procesarEntrada()" class="w-full py-5 lg:py-7 bg-slate-900 text-white rounded-[1.2rem] lg:rounded-[1.5rem] font-black text-xl lg:text-2xl hover:bg-blue-700 transition-all flex items-center justify-center gap-4 shadow-xl active:scale-95 uppercase italic">
                             <i data-lucide="printer" class="w-7 h-7"></i> Registrar e Imprimir
@@ -95,46 +110,45 @@
                 </div>
             </section>
 
+            <!-- SALIDA -->
             <section id="sec-salida" class="view-section hidden grid grid-cols-12 gap-6 lg:gap-10">
                 <div class="col-span-12 lg:col-span-7 bg-white p-6 lg:p-10 rounded-[2rem] lg:rounded-[2.5rem] shadow-sm border border-slate-200">
                     <div class="space-y-6 lg:space-y-8 text-center">
                         <div>
-                            <label class="block text-xs font-black text-slate-400 uppercase tracking-widest mb-4 italic text-left italic">Código de Ticket (ID)</label>
-                            <input id="codigoSalida" type="number" placeholder="Ej: 1" 
-                                class="w-full p-4 lg:p-8 bg-slate-50 border-2 border-slate-100 rounded-[1.5rem] lg:rounded-[2rem] text-4xl lg:text-6xl font-mono font-black text-center focus:border-red-500 focus:bg-white outline-none transition-all shadow-inner">
+                            <label class="block text-xs font-black text-slate-400 uppercase tracking-widest mb-4 italic text-left">Código de Ticket (ID)</label>
+                            <input id="codigoSalida" type="number" placeholder="Ej: 1"
+                                class="w-full p-4 lg:p-8 bg-slate-50 border-2 border-slate-200 rounded-[1.5rem] lg:rounded-[2rem] text-4xl lg:text-6xl font-mono font-black text-center focus:border-red-500 focus:bg-white outline-none transition-all shadow-inner">
                         </div>
                         <div id="panelResultadoSalida" class="hidden space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-    <div class="bg-blue-50 p-8 rounded-[2.5rem] border border-blue-100 shadow-inner">
-        <div class="text-center mb-6">
-            <p class="text-[10px] font-black text-blue-400 uppercase tracking-widest italic">Vehículo Identificado</p>
-            <h4 id="res-placa" class="text-5xl font-black text-blue-900 italic uppercase tracking-tighter">---</h4>
-        </div>
-
-        <div class="grid grid-cols-2 gap-8 mb-8">
-            <div class="space-y-2">
-                <p class="text-[9px] font-black text-slate-400 uppercase italic">Ingreso</p>
-                <p id="res-fecha-in" class="text-sm font-bold text-slate-700 font-mono italic">--/--/--</p>
-                <p id="res-hora-in" class="text-2xl font-black text-slate-800 font-mono italic">--:--</p>
-            </div>
-            <div class="space-y-2 text-right">
-                <p class="text-[9px] font-black text-slate-400 uppercase italic">Salida (Ahora)</p>
-                <p id="res-fecha-out" class="text-sm font-bold text-slate-700 font-mono italic">--/--/--</p>
-                <p id="res-hora-out" class="text-2xl font-black text-blue-600 font-mono italic">--:--</p>
-            </div>
-        </div>
-
-        <div class="flex justify-between items-center p-6 bg-white rounded-3xl shadow-sm border border-blue-50">
-            <div>
-                <p class="text-[9px] font-black text-slate-400 uppercase italic">Estadía Total</p>
-                <p id="res-tiempo" class="text-xl font-black text-slate-800 italic">0h 0m 0s</p>
-            </div>
-            <div class="text-right">
-                <p class="text-[9px] font-black text-green-600 uppercase italic">Monto a Cobrar</p>
-                <p id="res-monto" class="text-4xl font-black text-green-600 italic tracking-tighter">S/ 0.00</p>
-            </div>
-        </div>
-    </div>
-</div>
+                            <div class="bg-gradient-to-br from-blue-50 to-green-50 p-6 lg:p-8 rounded-[2rem] border border-blue-100 shadow-inner">
+                                <div class="text-center mb-6">
+                                    <p class="text-[10px] font-black text-blue-400 uppercase tracking-widest italic mb-1">Vehículo Identificado</p>
+                                    <h4 id="res-placa" class="text-5xl font-black text-blue-900 italic uppercase tracking-tighter leading-none">---</h4>
+                                </div>
+                                <div class="grid grid-cols-2 gap-6 lg:gap-8 mb-6">
+                                    <div class="space-y-1 text-left">
+                                        <p class="text-[9px] font-black text-slate-400 uppercase italic">Ingreso</p>
+                                        <p id="res-fecha-in" class="text-sm font-bold text-slate-600 font-mono italic">--/--/--</p>
+                                        <p id="res-hora-in" class="text-2xl font-black text-slate-800 font-mono italic">--:--</p>
+                                    </div>
+                                    <div class="space-y-1 text-right">
+                                        <p class="text-[9px] font-black text-slate-400 uppercase italic">Salida (Ahora)</p>
+                                        <p id="res-fecha-out" class="text-sm font-bold text-slate-600 font-mono italic">--/--/--</p>
+                                        <p id="res-hora-out" class="text-2xl font-black text-blue-600 font-mono italic">--:--</p>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center p-5 bg-white rounded-2xl shadow-sm border border-blue-50">
+                                    <div class="text-left">
+                                        <p class="text-[9px] font-black text-slate-400 uppercase italic mb-1">Estadía Total</p>
+                                        <p id="res-tiempo" class="text-lg font-black text-slate-800 italic font-mono">0h 0m 0s</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-[9px] font-black text-green-600 uppercase italic mb-1">Monto a Cobrar</p>
+                                        <p id="res-monto" class="text-4xl font-black text-green-600 italic tracking-tighter leading-none">S/ 0.00</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <button onclick="buscarTicketSalida()" id="btnBuscarSalida" class="w-full py-5 lg:py-7 bg-slate-900 text-white rounded-[1.2rem] lg:rounded-[1.5rem] font-black text-xl lg:text-2xl hover:bg-red-600 transition-all flex items-center justify-center gap-4 shadow-xl active:scale-95 uppercase italic">
                             <i data-lucide="search" class="w-7 h-7"></i> Calcular Salida
                         </button>
@@ -145,55 +159,69 @@
                 </div>
             </section>
 
+            <!-- INGRESADOS -->
             <section id="sec-ingresados" class="view-section hidden">
-                <div class="bg-white rounded-[2rem] shadow-sm border p-4 lg:p-8 overflow-x-auto">
-                    <table class="w-full text-left min-w-[500px]">
-                        <thead>
-                            <tr class="text-xs font-black text-slate-400 uppercase border-b border-slate-100 italic">
-                                <th class="p-5">Placa</th>
-                                <th class="p-5 text-center">Hora Ingreso</th>
-                                <th class="p-5 text-right">Acción</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tabla-adentro"></tbody>
-                    </table>
+                <div class="bg-white rounded-[2rem] shadow-sm border border-slate-200 overflow-hidden">
+                    <div class="px-6 lg:px-8 py-5 border-b border-slate-100 flex items-center justify-between">
+                        <h3 class="font-black text-slate-800 uppercase tracking-tight text-base lg:text-lg">En Cochera Ahora</h3>
+                        <span class="text-[9px] bg-green-100 text-green-600 px-3 py-1 rounded-full font-black uppercase tracking-wider">En vivo</span>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left min-w-[500px]">
+                            <thead>
+                                <tr class="text-xs font-black text-slate-400 uppercase border-b border-slate-100 italic">
+                                    <th class="p-5">Placa</th>
+                                    <th class="p-5 text-center">Hora Ingreso</th>
+                                    <th class="p-5 text-right">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-adentro"></tbody>
+                        </table>
+                    </div>
                 </div>
             </section>
 
+            <!-- INGRESOS DÍA -->
             <section id="sec-ingresos-dia" class="view-section hidden space-y-6">
                 <div class="bg-gradient-to-br from-green-500 to-emerald-700 p-6 lg:p-8 rounded-[2rem] lg:rounded-[2.5rem] shadow-xl text-white flex justify-between items-center">
                     <div>
                         <p class="text-[10px] font-black uppercase tracking-widest opacity-80 mb-1">Recaudación Total (Hoy)</p>
-                        <h3 id="totalGanadoDia" class="text-3xl lg:text-5xl font-black italic tracking-tighter italic">S/ 0.00</h3>
+                        <h3 id="totalGanadoDia" class="text-3xl lg:text-5xl font-black italic tracking-tighter">S/ 0.00</h3>
                     </div>
                     <div class="bg-white/20 p-4 rounded-2xl backdrop-blur-md">
                         <i data-lucide="trending-up" class="w-10 h-10 text-white"></i>
                     </div>
                 </div>
-                <div class="bg-white rounded-[2rem] shadow-sm border p-4 lg:p-8 overflow-x-auto">
-                    <table class="w-full text-left min-w-[500px]">
-                        <thead>
-                            <tr class="text-xs font-black text-slate-400 uppercase border-b border-slate-100 italic">
-                                <th class="p-5">Placa</th>
-                                <th class="p-5">Entrada</th>
-                                <th class="p-5">Salida</th>
-                                <th class="p-5 text-right">Cobro</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tabla-historial"></tbody>
-                    </table>
+                <div class="bg-white rounded-[2rem] shadow-sm border border-slate-200 overflow-hidden">
+                    <div class="px-6 lg:px-8 py-5 border-b border-slate-100">
+                        <h3 class="font-black text-slate-800 uppercase tracking-tight text-base lg:text-lg">Historial del Día</h3>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left min-w-[500px]">
+                            <thead>
+                                <tr class="text-xs font-black text-slate-400 uppercase border-b border-slate-100 italic">
+                                    <th class="p-5">Placa</th>
+                                    <th class="p-5">Entrada</th>
+                                    <th class="p-5">Salida</th>
+                                    <th class="p-5 text-right">Cobro</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-historial"></tbody>
+                        </table>
+                    </div>
                 </div>
             </section>
 
+            <!-- ABONADOS -->
             <section id="sec-abonados" class="view-section hidden space-y-6">
                 <div class="grid grid-cols-12 gap-6 lg:gap-10">
                     <div class="col-span-12 lg:col-span-4 bg-white p-6 lg:p-10 rounded-[2rem] shadow-sm border border-slate-200">
                         <h3 class="text-xl font-black text-blue-600 italic uppercase mb-6">Abonado Mensual</h3>
                         <div class="space-y-6">
                             <input id="placaAbonado" type="text" placeholder="ABC-123" maxlength="12"
-                                class="w-full p-5 bg-slate-50 border-2 border-slate-100 rounded-2xl text-4xl font-black text-center uppercase focus:border-blue-500 outline-none shadow-inner">
+                                class="w-full p-5 bg-slate-50 border-2 border-slate-200 rounded-2xl text-4xl font-black text-center uppercase focus:border-blue-500 outline-none shadow-inner" style="letter-spacing:0.06em;">
                             <textarea id="datosAbonado" placeholder="Datos / Comentarios..." rows="2"
-                                class="w-full p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl text-sm font-bold focus:border-blue-500 outline-none resize-none"></textarea>
+                                class="w-full p-4 bg-slate-50 border-2 border-slate-200 rounded-2xl text-sm font-bold focus:border-blue-500 outline-none resize-none"></textarea>
                             <button onclick="registrarAbonado()" class="w-full py-6 bg-[#1e3a8a] text-white rounded-[1.5rem] font-black text-lg hover:bg-blue-700 transition-all shadow-xl active:scale-95 uppercase italic">Renovar 31 Días</button>
                         </div>
                     </div>
@@ -202,7 +230,7 @@
                         <div class="overflow-x-auto">
                             <table class="w-full text-left min-w-[500px]">
                                 <thead>
-                                    <tr class="text-[10px] font-black text-slate-400 uppercase border-b italic">
+                                    <tr class="text-[10px] font-black text-slate-400 uppercase border-b border-slate-100 italic">
                                         <th class="p-5">Vehículo</th>
                                         <th class="p-5">Datos Extra</th>
                                         <th class="p-5">Vence en</th>
@@ -216,12 +244,14 @@
                 </div>
             </section>
 
+            <!-- TARIFA PLANA -->
             <section id="sec-tarifa" class="view-section hidden space-y-6">
                 <div class="grid grid-cols-12 gap-6 lg:gap-10">
                     <div class="col-span-12 lg:col-span-5 bg-white p-6 lg:p-10 rounded-[2rem] lg:rounded-[2.5rem] shadow-sm border border-slate-200">
                         <h3 class="text-xl font-black mb-6 italic uppercase text-blue-600">Nueva Tarifa Plana (S/ 25)</h3>
                         <div class="space-y-4">
-                            <input id="placaPlana" type="text" placeholder="INGRESE PLACA" maxlength="12" class="w-full p-6 bg-slate-50 border-2 border-slate-100 rounded-2xl text-4xl font-black text-center uppercase focus:border-blue-500 outline-none shadow-inner">
+                            <input id="placaPlana" type="text" placeholder="INGRESE PLACA" maxlength="12"
+                                class="w-full p-6 bg-slate-50 border-2 border-slate-200 rounded-2xl text-4xl font-black text-center uppercase focus:border-blue-500 outline-none shadow-inner" style="letter-spacing:0.06em;">
                             <div class="grid grid-cols-2 gap-4">
                                 <button onclick="guardarPlana('pagado')" class="py-5 bg-green-600 text-white rounded-2xl font-black uppercase italic shadow-lg active:scale-95">Ya Pagó</button>
                                 <button onclick="guardarPlana('pendiente')" class="py-5 bg-slate-800 text-white rounded-2xl font-black uppercase italic shadow-lg active:scale-95">Por Pagar</button>
@@ -233,7 +263,7 @@
                         <div class="overflow-x-auto">
                             <table class="w-full text-left min-w-[450px]">
                                 <thead>
-                                    <tr class="text-[10px] font-black text-slate-400 uppercase border-b italic">
+                                    <tr class="text-[10px] font-black text-slate-400 uppercase border-b border-slate-100 italic">
                                         <th class="p-4">Vehículo</th>
                                         <th class="p-4">Estado</th>
                                         <th class="p-4 text-right">Acción</th>
@@ -246,17 +276,18 @@
                 </div>
             </section>
 
+            <!-- ESTADÍSTICAS -->
             <section id="sec-estadisticas" class="view-section hidden space-y-6">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100">
+                    <div class="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-200">
                         <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 italic text-center">Promedio Diario</p>
                         <h4 id="stat-promedio" class="text-3xl font-black text-blue-600 italic text-center">S/ 0.00</h4>
                     </div>
-                    <div class="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100">
+                    <div class="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-200">
                         <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 italic text-center">Día más Rentable</p>
                         <h4 id="stat-mejor-dia" class="text-3xl font-black text-green-600 italic text-center">---</h4>
                     </div>
-                    <div class="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100">
+                    <div class="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-200">
                         <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 italic text-center">Vehículos del Mes</p>
                         <h4 id="stat-total-vehiculos" class="text-3xl font-black text-slate-800 italic text-center">0</h4>
                     </div>
@@ -269,9 +300,11 @@
                     <div id="chart-ingresos" class="w-full"></div>
                 </div>
             </section>
+
         </div>
     </main>
 
+    <!-- MODAL TICKET -->
     <div id="apartado-ticket" class="hidden fixed inset-0 bg-slate-900/90 backdrop-blur-sm z-50 flex items-center justify-center p-4">
         <div class="bg-white p-6 rounded-[2rem] shadow-2xl max-w-[320px] w-full">
             <div id="ticket-imprimible" class="bg-white p-4 border-2 border-dashed border-slate-200 font-mono text-center text-slate-900">
@@ -283,7 +316,7 @@
                 <div class="my-2 border-t border-dashed border-slate-300"></div>
                 <p class="text-[10px] font-bold italic uppercase">Ingreso</p>
                 <p id="t-numero" class="text-4xl font-black my-1 text-blue-600 tracking-tighter italic">#000</p>
-                <div id="t-placa-ticket" class="inline-block border-2 border-slate-900 px-4 py-1 text-4xl font-black my-2 uppercase tracking-tighter italic font-black">ABC-123</div>
+                <div id="t-placa-ticket" class="inline-block border-2 border-slate-900 px-4 py-1 text-4xl font-black my-2 uppercase tracking-tighter italic">ABC-123</div>
                 <div class="text-[10px] text-left space-y-1 mt-2 font-medium">
                     <p class="flex justify-between italic"><span>FECHA:</span> <span id="t-fecha" class="font-bold">--/--/--</span></p>
                     <p class="flex justify-between italic"><span>HORA:</span> <span id="t-hora" class="font-bold">--:--:--</span></p>
@@ -291,20 +324,21 @@
                 <div class="my-2 border-t border-dashed border-slate-300"></div>
                 <p class="text-[10px] mt-3 font-black uppercase italic">¡Conserve su ticket!</p>
             </div>
-            <button onclick="finalizarImpresion()" class="w-full mt-6 py-4 bg-blue-600 text-white rounded-2xl font-black shadow-lg uppercase italic text-sm italic">Imprimir (Enter)</button>
+            <button onclick="finalizarImpresion()" class="w-full mt-6 py-4 bg-blue-600 text-white rounded-2xl font-black shadow-lg uppercase italic text-sm">Imprimir (Enter)</button>
         </div>
     </div>
 
+    <!-- MODAL BOLETA -->
     <div id="apartado-boleta" class="hidden fixed inset-0 bg-slate-900/95 backdrop-blur-sm z-50 flex items-center justify-center p-4">
         <div class="bg-white p-8 rounded-[2rem] shadow-2xl max-w-[320px] w-full">
             <div id="boleta-imprimible" class="bg-white p-4 border-2 border-dashed border-slate-200 font-mono text-center text-slate-900">
                 <p class="text-[10px] font-black uppercase mb-1 italic font-bold">Boleta de Pago</p>
                 <div class="flex flex-col items-center mb-4">
-                    <p class="font-black text-xl italic leading-none uppercase italic">Parking Pro</p>
+                    <p class="font-black text-xl italic leading-none uppercase">Parking Pro</p>
                     <p class="text-[8px] uppercase tracking-tighter font-bold italic">Parking Ollaraya</p>
                 </div>
                 <div class="my-2 border-t border-dashed border-slate-300"></div>
-                <p id="b-placa" class="text-3xl font-black my-2 uppercase tracking-tighter italic font-black">ABC-123</p>
+                <p id="b-placa" class="text-3xl font-black my-2 uppercase tracking-tighter italic">ABC-123</p>
                 <div class="text-[10px] text-left space-y-1 mt-2 italic font-medium">
                     <p class="flex justify-between italic"><span>FECHA:</span> <span id="b-fecha">--/--/--</span></p>
                     <p class="flex justify-between italic"><span>INGRESO:</span> <span id="b-hora-in">--:--:--</span></p>
@@ -318,7 +352,7 @@
                 </div>
                 <p class="text-[9px] mt-4 font-black uppercase italic tracking-tighter">¡Gracias por su preferencia!</p>
             </div>
-            <button onclick="imprimirBoletaFinal()" class="w-full mt-6 py-4 bg-green-600 text-white rounded-2xl font-black shadow-lg uppercase italic tracking-widest text-sm italic">Imprimir Boleta (Enter)</button>
+            <button onclick="imprimirBoletaFinal()" class="w-full mt-6 py-4 bg-green-600 text-white rounded-2xl font-black shadow-lg uppercase italic tracking-widest text-sm">Imprimir Boleta (Enter)</button>
         </div>
     </div>
 
