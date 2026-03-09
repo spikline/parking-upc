@@ -340,14 +340,20 @@ async function cargarAbonados() {
 
 // ─── OCUPACIÓN ────────────────────────────────────────────────────────────────
 async function actualizarOcupacion() {
-    const { count: tActivos } = await _supabase.from('tickets').select('*', { count: 'exact', head: true }).is('fecha_salida', null);
+    const { count: tActivos } = await _supabase
+        .from('tickets').select('*', { count: 'exact', head: true }).is('fecha_salida', null);
     const hoy = new Date().toISOString().split('T')[0];
-    const { count: pActivas } = await _supabase.from('tarifas_planas').select('*', { count: 'exact', head: true }).gte('fecha_entrada', hoy);
-    const { count: aVigentes } = await _supabase.from('abonados').select('*', { count: 'exact', head: true }).gt('fecha_vencimiento', new Date().toISOString());
+    const { count: pActivas } = await _supabase
+        .from('tarifas_planas').select('*', { count: 'exact', head: true }).gte('fecha_entrada', hoy);
+    const { count: aVigentes } = await _supabase
+        .from('abonados').select('*', { count: 'exact', head: true }).gt('fecha_vencimiento', new Date().toISOString());
+
     const ocupados    = (tActivos || 0) + (pActivas || 0);
     const disponibles = TOTAL_ESPACIOS - ocupados;
+
     if (document.getElementById('count-disponible')) document.getElementById('count-disponible').innerText = disponibles;
-    if (document.getElementById('count-tickets'))    document.getElementById('count-tickets').innerText    = ocupados;
+    if (document.getElementById('count-tickets'))    document.getElementById('count-tickets').innerText    = tActivos || 0;
+    if (document.getElementById('count-planas'))     document.getElementById('count-planas').innerText     = pActivas || 0;
     if (document.getElementById('count-abonados'))   document.getElementById('count-abonados').innerText   = aVigentes || 0;
 }
 
@@ -593,7 +599,7 @@ async function cargarCierreCajaHoy() {
         set('cierre-efectivo-guardado', `S/ ${cierre.efectivo}`);
         set('cierre-yape-guardado',     `S/ ${cierre.yape}`);
         set('cierre-notas-guardado',    cierre.notas || '—');
-        set('cierre-diferencia',        diff === 0 ? '✓ Cuadra perfecto' : `Diferencia: ${diff > 0 ? '+' : ''}S/ ${diff.toFixed(2)}`);
+        set('cierre-diferencia', diff === 0 ? '✓ Cuadra perfecto' : `Diferencia: ${diff > 0 ? '+' : ''}S/ ${diff.toFixed(2)}`);
         const elDif = document.getElementById('cierre-diferencia');
         if (elDif) elDif.className = `font-black text-lg ${diff === 0 ? 'text-green-600' : 'text-red-500'}`;
         document.getElementById('panel-cierre-guardado')?.classList.remove('hidden');
@@ -602,6 +608,11 @@ async function cargarCierreCajaHoy() {
         document.getElementById('panel-cierre-guardado')?.classList.add('hidden');
         document.getElementById('panel-cierre-form')?.classList.remove('hidden');
     }
+}
+
+function editarCierreCaja() {
+    document.getElementById('panel-cierre-guardado').classList.add('hidden');
+    document.getElementById('panel-cierre-form').classList.remove('hidden');
 }
 
 async function guardarCierreCaja() {

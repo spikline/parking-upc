@@ -45,6 +45,21 @@ input[type="number"]:focus {
     box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
 }
 
+/* Móvil - evitar corte de contenido */
+@media (max-width: 1023px) {
+    body {
+        min-height: 100vh;
+        overflow-y: auto;
+    }
+    main {
+        min-height: 0;
+        overflow: visible;
+    }
+    .view-section {
+        padding-bottom: 2rem;
+    }
+}
+
 /* Print */
 @media print {
     * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }

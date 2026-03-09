@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700;1,800;1,900&display=swap" rel="stylesheet">
 </head>
-<body class="bg-slate-100 flex flex-col lg:flex-row h-screen overflow-hidden text-slate-700" style="font-family:'Inter',sans-serif;">
+<body class="bg-slate-100 flex flex-col lg:flex-row lg:h-screen lg:overflow-hidden text-slate-700" style="font-family:'Inter',sans-serif;">
 
     <!-- SIDEBAR -->
     <aside class="w-full lg:w-72 text-white flex flex-col shadow-2xl z-10 shrink-0"
@@ -53,29 +53,33 @@
         </nav>
         <div class="mt-auto p-3 lg:p-4 m-3 lg:m-4 rounded-2xl border border-white/10" style="background:rgba(0,0,0,0.25);">
             <p class="text-[9px] text-blue-300 uppercase font-black mb-3 tracking-widest text-center">Estado Cochera</p>
-            <div class="grid grid-cols-3 gap-2 text-center">
-                <div class="bg-white/10 rounded-xl py-2 px-1">
-                    <p class="text-[8px] text-slate-300 uppercase font-black mb-0.5">Libres</p>
-                    <p id="count-disponible" class="text-xl font-black text-white leading-none">450</p>
+            <div class="grid grid-cols-2 gap-2 text-center">
+                <div class="bg-white/10 rounded-xl py-3 px-1">
+                    <p class="text-[8px] text-slate-300 uppercase font-black mb-1">Libres</p>
+                    <p id="count-disponible" class="text-2xl font-black text-white leading-none">450</p>
                 </div>
-                <div class="bg-white/10 rounded-xl py-2 px-1">
-                    <p class="text-[8px] text-slate-300 uppercase font-black mb-0.5">Tickets</p>
-                    <p id="count-tickets" class="text-xl font-black text-yellow-300 leading-none">0</p>
+                <div class="bg-white/10 rounded-xl py-3 px-1">
+                    <p class="text-[8px] text-slate-300 uppercase font-black mb-1">Hora/Fracc.</p>
+                    <p id="count-tickets" class="text-2xl font-black text-yellow-300 leading-none">0</p>
                 </div>
-                <div class="bg-white/10 rounded-xl py-2 px-1">
-                    <p class="text-[8px] text-slate-300 uppercase font-black mb-0.5">Abonos</p>
-                    <p id="count-abonados" class="text-xl font-black text-green-300 leading-none">0</p>
+                <div class="bg-white/10 rounded-xl py-3 px-1">
+                    <p class="text-[8px] text-slate-300 uppercase font-black mb-1">Tarifa Plana</p>
+                    <p id="count-planas" class="text-2xl font-black text-purple-300 leading-none">0</p>
+                </div>
+                <div class="bg-white/10 rounded-xl py-3 px-1">
+                    <p class="text-[8px] text-slate-300 uppercase font-black mb-1">Abonos</p>
+                    <p id="count-abonados" class="text-2xl font-black text-green-300 leading-none">0</p>
                 </div>
             </div>
         </div>
     </aside>
 
     <!-- MAIN -->
-    <main class="flex-1 overflow-y-auto p-4 lg:p-10 bg-slate-100">
+    <main class="flex-1 lg:overflow-y-auto p-4 lg:p-10 bg-slate-100 pb-10">
         <header class="mb-6 lg:mb-10 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-3 lg:gap-4">
             <div>
                 <h2 id="tituloVista" class="text-2xl lg:text-4xl font-black text-slate-900 tracking-tighter italic uppercase leading-none">Registrar Vehículo</h2>
-                <p id="descVista" class="text-xs lg:text-sm text-slate-400 font-semibold mt-1">Parking Ollaraya</p>
+                <p id="descVista" class="text-xs lg:text-sm text-slate-400 font-semibold mt-1">Parking Pro</p>
             </div>
             <div class="bg-white px-5 py-3 rounded-2xl shadow-sm border border-slate-200 text-center min-w-[120px] lg:min-w-[160px]">
                 <p id="reloj" class="text-lg lg:text-2xl font-black text-blue-600 font-mono tracking-tighter">--:--:--</p>
@@ -249,9 +253,7 @@
                 </div>
             </section>
 
-            <!-- ═══════════════════════════════════════════════════════════════ -->
-            <!-- ESTADÍSTICAS                                                    -->
-            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <!-- ESTADÍSTICAS -->
             <section id="sec-estadisticas" class="view-section hidden space-y-6">
 
                 <!-- Navegación mes -->
@@ -265,7 +267,7 @@
                     </button>
                 </div>
 
-                <!-- ── CALENDARIO DÍA A DÍA ── -->
+                <!-- CALENDARIO DÍA A DÍA -->
                 <div class="bg-white rounded-[2rem] shadow-sm border border-slate-200 overflow-hidden">
                     <div class="px-6 lg:px-8 py-5 border-b border-slate-100 flex items-center justify-between">
                         <h3 class="font-black text-slate-800 uppercase tracking-tight text-base lg:text-lg">Registro Diario</h3>
@@ -289,13 +291,12 @@
                     </div>
                 </div>
 
-                <!-- ── RESUMEN DEL MES ── -->
+                <!-- RESUMEN DEL MES -->
                 <div class="bg-white rounded-[2rem] shadow-sm border border-slate-200 overflow-hidden">
                     <div class="px-6 lg:px-8 py-5 border-b border-slate-100">
                         <h3 class="font-black text-slate-800 uppercase tracking-tight text-base lg:text-lg">Resumen del Mes</h3>
                     </div>
                     <div class="p-6 lg:p-8">
-                        <!-- Fila ingresos -->
                         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
                             <div class="bg-slate-50 rounded-2xl p-4 border border-slate-100">
                                 <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1 italic">Hora / Fracción</p>
@@ -318,7 +319,6 @@
                                 <p class="text-xs text-slate-400 font-bold mt-1">este mes</p>
                             </div>
                         </div>
-                        <!-- Totales grandes -->
                         <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
                             <div class="bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl p-5 text-white">
                                 <p class="text-[9px] font-black uppercase tracking-widest opacity-80 mb-1 italic">Total Ingresos Brutos</p>
@@ -337,14 +337,14 @@
                     </div>
                 </div>
 
-                <!-- ── CIERRE DE CAJA (HOY) ── -->
+                <!-- CIERRE DE CAJA -->
                 <div id="sec-cierre-caja" class="bg-white rounded-[2rem] shadow-sm border border-slate-200 overflow-hidden">
                     <div class="px-6 lg:px-8 py-5 border-b border-slate-100 flex items-center justify-between">
                         <h3 class="font-black text-slate-800 uppercase tracking-tight text-base lg:text-lg">Cierre de Caja — Hoy</h3>
                         <span class="text-[9px] bg-amber-100 text-amber-600 px-3 py-1 rounded-full font-black uppercase">Al final del día</span>
                     </div>
                     <div class="p-6 lg:p-8">
-                        <!-- Resumen automático del día -->
+                        <!-- Resumen automático -->
                         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
                             <div class="bg-slate-50 rounded-2xl p-4 border border-slate-100">
                                 <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1 italic">Tickets cobrados</p>
@@ -364,7 +364,7 @@
                             </div>
                         </div>
 
-                        <!-- Formulario cierre (se oculta cuando ya está guardado) -->
+                        <!-- Formulario -->
                         <div id="panel-cierre-form">
                             <p class="text-xs font-black text-slate-500 uppercase tracking-widest mb-4 italic">Ingresa el efectivo contado al cerrar caja:</p>
                             <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
@@ -389,7 +389,7 @@
                             </button>
                         </div>
 
-                        <!-- Cierre ya guardado -->
+                        <!-- Cierre guardado -->
                         <div id="panel-cierre-guardado" class="hidden">
                             <div class="bg-green-50 border border-green-200 rounded-2xl p-6">
                                 <p class="text-[10px] font-black text-green-600 uppercase tracking-widest mb-4">✓ Caja cerrada hoy</p>
@@ -411,12 +411,17 @@
                                         <p id="cierre-notas-guardado" class="text-sm font-bold text-slate-600 italic">—</p>
                                     </div>
                                 </div>
+                                <button onclick="editarCierreCaja()"
+                                    class="mt-4 w-full py-3 bg-white border-2 border-slate-200 text-slate-700 rounded-2xl font-black text-sm hover:bg-slate-50 transition-all active:scale-95 uppercase italic flex items-center justify-center gap-2">
+                                    <i data-lucide="pencil" class="w-4 h-4"></i> Editar Cierre de Caja
+                                </button>
                             </div>
                         </div>
+
                     </div>
                 </div>
 
-                <!-- ── GASTOS ── -->
+                <!-- GASTOS -->
                 <div class="grid grid-cols-12 gap-6 lg:gap-10">
                     <div class="col-span-12 lg:col-span-4 bg-white p-6 lg:p-8 rounded-[2rem] shadow-sm border border-slate-200">
                         <h3 class="text-lg font-black text-red-600 italic uppercase mb-5 flex items-center gap-2">
@@ -446,7 +451,7 @@
                 </div>
 
             </section>
-            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <!-- FIN ESTADÍSTICAS -->
 
         </div>
     </main>
@@ -455,7 +460,7 @@
     <div id="apartado-ticket" class="hidden fixed inset-0 bg-slate-900/90 backdrop-blur-sm z-50 flex items-center justify-center p-4">
         <div class="bg-white p-6 rounded-[2rem] shadow-2xl max-w-[320px] w-full">
             <div id="ticket-imprimible" class="bg-white p-4 border-2 border-dashed border-slate-200 font-mono text-center text-slate-900">
-                <p class="text-[9px] font-bold uppercase mb-1 italic">08:00 AM - 08:00 PM</p>
+                <p class="text-[9px] font-bold uppercase mb-1 italic">08:00 AM - 09:00 PM</p>
                 <div class="flex flex-col items-center mb-4">
                     <p class="font-black text-xl italic uppercase tracking-tighter leading-none">Parking Pro</p>
                     <p class="text-[8px] uppercase tracking-tighter font-bold italic">Parking Ollaraya</p>
