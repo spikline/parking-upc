@@ -61,6 +61,11 @@ input[type="number"]:focus {
 }
 
 /* Print */
+@page {
+    margin: 0;
+    size: 80mm auto;
+}
+
 @media print {
     * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     body > aside,
@@ -77,13 +82,12 @@ input[type="number"]:focus {
     #apartado-boleta:not(.hidden),
     #apartado-plana:not(.hidden),
     #apartado-abonado:not(.hidden) {
-        display: flex !important;
+        display: block !important;
         position: static !important;
         background: white !important;
-        align-items: flex-start !important;
-        justify-content: center !important;
         padding: 0 !important;
         inset: auto !important;
+        width: 80mm !important;
     }
 
     #apartado-ticket > div,
@@ -95,6 +99,7 @@ input[type="number"]:focus {
         padding: 0 !important;
         max-width: 100% !important;
         border-radius: 0 !important;
+        width: 80mm !important;
     }
 
     #ticket-imprimible,
@@ -102,10 +107,10 @@ input[type="number"]:focus {
     #plana-imprimible,
     #abonado-imprimible {
         width: 80mm !important;
-        margin: 0 auto;
+        margin: 0 !important;
+        padding: 4mm !important;
         border: none !important;
         box-shadow: none !important;
-        font-size: 11px;
     }
 
     button { display: none !important; }

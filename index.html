@@ -482,37 +482,32 @@
     <div id="apartado-ticket" class="hidden fixed inset-0 bg-slate-900/90 backdrop-blur-sm z-50 flex items-center justify-center p-4">
         <div class="bg-white p-5 rounded-[2rem] shadow-2xl max-w-[320px] w-full">
             <div id="ticket-imprimible" class="bg-white font-mono text-slate-900" style="width:80mm; margin:0 auto;">
-                <!-- Cabecera -->
-                <div class="text-center pb-3 border-b-2 border-slate-800">
-                    <p class="text-xl font-black uppercase tracking-widest leading-none">PARKING</p>
-                    <p class="text-2xl font-black uppercase tracking-widest">OLLARAYA</p>
-                    <p class="text-[9px] mt-1 text-slate-500">Jiron Huanuco 2139</p>
-                    <p class="text-[10px] font-bold mt-1 uppercase">— Ticket de Ingreso —</p>
+                <div class="text-center pb-2 border-b-2 border-slate-800">
+                    <p class="text-lg font-black uppercase tracking-widest leading-tight">PARKING</p>
+                    <p class="text-2xl font-black uppercase tracking-widest leading-tight">OLLARAYA</p>
+                    <p class="text-[11px] font-bold mt-1 uppercase tracking-wide">— Ticket de Ingreso —</p>
                 </div>
-                <!-- Datos -->
-                <div class="py-3 border-b border-dashed border-slate-400 space-y-1.5">
-                    <div class="flex justify-between text-[11px]">
-                        <span class="text-slate-500">Ticket</span>
-                        <span id="t-numero" class="font-black">#000</span>
+                <div class="py-2 border-b border-dashed border-slate-400 space-y-2">
+                    <div class="flex justify-between items-center">
+                        <span class="text-[13px] font-bold text-slate-500">Ticket</span>
+                        <span id="t-numero" class="text-[15px] font-black">#000</span>
                     </div>
-                    <div class="flex justify-between text-[11px]">
-                        <span class="text-slate-500">Placa</span>
-                        <span id="t-placa-ticket" class="font-black text-sm uppercase">ABC-123</span>
+                    <div class="flex justify-between items-center">
+                        <span class="text-[13px] font-bold text-slate-500">Placa</span>
+                        <span id="t-placa-ticket" class="text-[18px] font-black uppercase tracking-wider">ABC-123</span>
                     </div>
-                    <div class="flex justify-between text-[11px]">
-                        <span class="text-slate-500">Fecha Ingreso</span>
-                        <span id="t-fecha" class="font-bold">--/--/--</span>
+                    <div class="flex justify-between items-center">
+                        <span class="text-[13px] font-bold text-slate-500">Fecha</span>
+                        <span id="t-fecha" class="text-[15px] font-black">--/--/--</span>
                     </div>
-                    <div class="flex justify-between text-[11px]">
-                        <span class="text-slate-500">Hora Ingreso</span>
-                        <span id="t-hora" class="font-bold">--:--:--</span>
+                    <div class="flex justify-between items-center">
+                        <span class="text-[13px] font-bold text-slate-500">Hora</span>
+                        <span id="t-hora" class="text-[15px] font-black">--:--:--</span>
                     </div>
                 </div>
-                <!-- Nota -->
-                <div class="pt-3 text-center space-y-1">
-                    <p class="text-[9px] font-black uppercase">NOTA</p>
-                    <p class="text-[8px] text-slate-600">La tarifa es por hora y/o fracción, tolerancia 15 minutos</p>
-                    <p class="text-[9px] font-black uppercase mt-1">¡Conserve su ticket para la salida!</p>
+                <div class="pt-2 text-center">
+                    <p class="text-[11px] font-black uppercase">¡Conserve su ticket para la salida!</p>
+                    <p class="text-[10px] text-slate-500 mt-1">Tolerancia 15 min — S/5 por hora o fracción</p>
                 </div>
             </div>
             <button onclick="finalizarImpresion()" class="w-full mt-5 py-3 bg-blue-600 text-white rounded-2xl font-black shadow-lg uppercase text-sm">Imprimir</button>
@@ -523,54 +518,46 @@
     <div id="apartado-boleta" class="hidden fixed inset-0 bg-slate-900/95 backdrop-blur-sm z-50 flex items-center justify-center p-4">
         <div class="bg-white p-5 rounded-[2rem] shadow-2xl max-w-[320px] w-full">
             <div id="boleta-imprimible" class="bg-white font-mono text-slate-900" style="width:80mm; margin:0 auto;">
-                <!-- Cabecera -->
-                <div class="text-center pb-3 border-b-2 border-slate-800">
-                    <p class="text-xl font-black uppercase tracking-widest leading-none">PARKING</p>
-                    <p class="text-2xl font-black uppercase tracking-widest">OLLARAYA</p>
-                    <p class="text-[9px] mt-1 text-slate-500">Jiron Huanuco 2139</p>
-                    <p class="text-[10px] font-bold mt-1 uppercase">— Ticket de Salida —</p>
+                <div class="text-center pb-2 border-b-2 border-slate-800">
+                    <p class="text-lg font-black uppercase tracking-widest leading-tight">PARKING</p>
+                    <p class="text-2xl font-black uppercase tracking-widest leading-tight">OLLARAYA</p>
+                    <p class="text-[11px] font-bold mt-1 uppercase tracking-wide">— Ticket de Salida —</p>
                 </div>
-                <!-- Datos -->
-                <div class="py-3 border-b border-dashed border-slate-400 space-y-1.5">
-                    <div class="flex justify-between text-[11px]">
-                        <span class="text-slate-500">Placa</span>
-                        <span id="b-placa" class="font-black text-sm uppercase">ABC-123</span>
+                <div class="py-2 border-b border-dashed border-slate-400 space-y-2">
+                    <div class="flex justify-between items-center">
+                        <span class="text-[13px] font-bold text-slate-500">Placa</span>
+                        <span id="b-placa" class="text-[18px] font-black uppercase tracking-wider">ABC-123</span>
                     </div>
-                    <div class="flex justify-between text-[11px]">
-                        <span class="text-slate-500">Fecha Ingreso</span>
-                        <span id="b-fecha-in" class="font-bold">--/--/--</span>
+                    <div class="flex justify-between items-center">
+                        <span class="text-[13px] font-bold text-slate-500">Fecha Ingreso</span>
+                        <span id="b-fecha-in" class="text-[15px] font-black">--/--/--</span>
                     </div>
-                    <div class="flex justify-between text-[11px]">
-                        <span class="text-slate-500">Hora Ingreso</span>
-                        <span id="b-hora-in" class="font-bold">--:--:--</span>
+                    <div class="flex justify-between items-center">
+                        <span class="text-[13px] font-bold text-slate-500">Hora Ingreso</span>
+                        <span id="b-hora-in" class="text-[15px] font-black">--:--:--</span>
                     </div>
-                    <div class="flex justify-between text-[11px]">
-                        <span class="text-slate-500">Fecha Salida</span>
-                        <span id="b-fecha" class="font-bold">--/--/--</span>
+                    <div class="flex justify-between items-center">
+                        <span class="text-[13px] font-bold text-slate-500">Fecha Salida</span>
+                        <span id="b-fecha" class="text-[15px] font-black">--/--/--</span>
                     </div>
-                    <div class="flex justify-between text-[11px]">
-                        <span class="text-slate-500">Hora Salida</span>
-                        <span id="b-hora-out" class="font-bold">--:--:--</span>
+                    <div class="flex justify-between items-center">
+                        <span class="text-[13px] font-bold text-slate-500">Hora Salida</span>
+                        <span id="b-hora-out" class="text-[15px] font-black">--:--:--</span>
                     </div>
-                    <div class="flex justify-between text-[11px]">
-                        <span class="text-slate-500">Tiempo</span>
-                        <span id="b-tiempo" class="font-bold">--h --m</span>
+                    <div class="flex justify-between items-center">
+                        <span class="text-[13px] font-bold text-slate-500">Tiempo</span>
+                        <span id="b-tiempo" class="text-[14px] font-black">--h --m</span>
                     </div>
                 </div>
-                <!-- Monto -->
-                <div class="py-3 border-b border-dashed border-slate-400">
-                    <div class="flex justify-between items-center text-[13px]">
-                        <span class="font-black uppercase">A pagar</span>
-                        <span id="b-monto" class="font-black text-base">S/ 0.00</span>
+                <div class="py-2 border-b border-dashed border-slate-400">
+                    <div class="flex justify-between items-center">
+                        <span class="text-[15px] font-black uppercase">A pagar</span>
+                        <span id="b-monto" class="text-[20px] font-black">S/ 0.00</span>
                     </div>
                 </div>
-                <!-- Nota -->
-                <div class="pt-3 text-center space-y-1">
-                    <p class="text-[9px] font-black uppercase">NOTA</p>
-                    <p class="text-[8px] text-slate-600">La tarifa es por hora y/o fracción, tolerancia 15 minutos</p>
-                    <p class="text-[8px] font-black uppercase mt-1">CONDICIONES DE LA PLAYA DE ESTACIONAMIENTO</p>
-                    <p class="text-[8px] text-slate-600">El pago es por el alquiler del espacio. La playa no responde por pérdidas, robos, incendio o actos de terrorismo.</p>
-                    <p class="text-[9px] font-black uppercase mt-1">SÍRVASE A CANJEAR POR BOLETA</p>
+                <div class="pt-2 text-center">
+                    <p class="text-[10px] font-black uppercase">SÍRVASE A CANJEAR POR BOLETA</p>
+                    <p class="text-[9px] text-slate-500 mt-1">La playa no responde por pérdidas, robos o actos de terrorismo.</p>
                 </div>
             </div>
             <button onclick="imprimirBoletaFinal()" class="w-full mt-5 py-3 bg-green-600 text-white rounded-2xl font-black shadow-lg uppercase text-sm">Imprimir</button>
@@ -581,39 +568,38 @@
     <div id="apartado-plana" class="hidden fixed inset-0 bg-slate-900/90 backdrop-blur-sm z-50 flex items-center justify-center p-4">
         <div class="bg-white p-5 rounded-[2rem] shadow-2xl max-w-[320px] w-full">
             <div id="plana-imprimible" class="bg-white font-mono text-slate-900" style="width:80mm; margin:0 auto;">
-                <div class="text-center pb-3 border-b-2 border-slate-800">
-                    <p class="text-xl font-black uppercase tracking-widest leading-none">PARKING</p>
-                    <p class="text-2xl font-black uppercase tracking-widest">OLLARAYA</p>
-                    <p class="text-[9px] mt-1 text-slate-500">Jiron Huanuco 2139</p>
-                    <p class="text-[10px] font-bold mt-1 uppercase">— Tarifa Plana —</p>
+                <div class="text-center pb-2 border-b-2 border-slate-800">
+                    <p class="text-lg font-black uppercase tracking-widest leading-tight">PARKING</p>
+                    <p class="text-2xl font-black uppercase tracking-widest leading-tight">OLLARAYA</p>
+                    <p class="text-[11px] font-bold mt-1 uppercase tracking-wide">— Tarifa Plana —</p>
                 </div>
-                <div class="py-3 border-b border-dashed border-slate-400 space-y-1.5">
-                    <div class="flex justify-between text-[11px]">
-                        <span class="text-slate-500">Placa</span>
-                        <span id="tp-placa" class="font-black text-sm uppercase">ABC-123</span>
+                <div class="py-2 border-b border-dashed border-slate-400 space-y-2">
+                    <div class="flex justify-between items-center">
+                        <span class="text-[13px] font-bold text-slate-500">Placa</span>
+                        <span id="tp-placa" class="text-[18px] font-black uppercase tracking-wider">ABC-123</span>
                     </div>
-                    <div class="flex justify-between text-[11px]">
-                        <span class="text-slate-500">Fecha</span>
-                        <span id="tp-fecha" class="font-bold">--/--/--</span>
+                    <div class="flex justify-between items-center">
+                        <span class="text-[13px] font-bold text-slate-500">Fecha</span>
+                        <span id="tp-fecha" class="text-[15px] font-black">--/--/--</span>
                     </div>
-                    <div class="flex justify-between text-[11px]">
-                        <span class="text-slate-500">Hora Ingreso</span>
-                        <span id="tp-hora" class="font-bold">--:--:--</span>
+                    <div class="flex justify-between items-center">
+                        <span class="text-[13px] font-bold text-slate-500">Hora Ingreso</span>
+                        <span id="tp-hora" class="text-[15px] font-black">--:--:--</span>
                     </div>
-                    <div class="flex justify-between text-[11px]">
-                        <span class="text-slate-500">Válido hasta</span>
-                        <span class="font-bold">cierre del día</span>
-                    </div>
-                </div>
-                <div class="py-3 border-b border-dashed border-slate-400">
-                    <div class="flex justify-between items-center text-[13px]">
-                        <span class="font-black uppercase">Tarifa Plana</span>
-                        <span id="tp-monto" class="font-black text-base">S/ 25.00</span>
+                    <div class="flex justify-between items-center">
+                        <span class="text-[13px] font-bold text-slate-500">Válido hasta</span>
+                        <span class="text-[14px] font-black">cierre del día</span>
                     </div>
                 </div>
-                <div class="pt-3 text-center">
-                    <p class="text-[9px] font-black uppercase">Válido solo por el día de hoy</p>
-                    <p class="text-[8px] text-slate-600 mt-1">No acumulable. Entrada y salida ilimitada durante el día.</p>
+                <div class="py-2 border-b border-dashed border-slate-400">
+                    <div class="flex justify-between items-center">
+                        <span class="text-[15px] font-black uppercase">Tarifa Plana</span>
+                        <span class="text-[20px] font-black">S/ 25.00</span>
+                    </div>
+                </div>
+                <div class="pt-2 text-center">
+                    <p class="text-[10px] font-black uppercase">Válido solo por el día de hoy</p>
+                    <p class="text-[9px] text-slate-500 mt-1">Entrada y salida ilimitada durante el día.</p>
                 </div>
             </div>
             <button onclick="imprimirPlanaFinal()" class="w-full mt-5 py-3 bg-purple-600 text-white rounded-2xl font-black shadow-lg uppercase text-sm">Imprimir</button>
@@ -624,39 +610,38 @@
     <div id="apartado-abonado" class="hidden fixed inset-0 bg-slate-900/90 backdrop-blur-sm z-50 flex items-center justify-center p-4">
         <div class="bg-white p-5 rounded-[2rem] shadow-2xl max-w-[320px] w-full">
             <div id="abonado-imprimible" class="bg-white font-mono text-slate-900" style="width:80mm; margin:0 auto;">
-                <div class="text-center pb-3 border-b-2 border-slate-800">
-                    <p class="text-xl font-black uppercase tracking-widest leading-none">PARKING</p>
-                    <p class="text-2xl font-black uppercase tracking-widest">OLLARAYA</p>
-                    <p class="text-[9px] mt-1 text-slate-500">Jiron Huanuco 2139</p>
-                    <p class="text-[10px] font-bold mt-1 uppercase">— Abonado Mensual —</p>
+                <div class="text-center pb-2 border-b-2 border-slate-800">
+                    <p class="text-lg font-black uppercase tracking-widest leading-tight">PARKING</p>
+                    <p class="text-2xl font-black uppercase tracking-widest leading-tight">OLLARAYA</p>
+                    <p class="text-[11px] font-bold mt-1 uppercase tracking-wide">— Abonado Mensual —</p>
                 </div>
-                <div class="py-3 border-b border-dashed border-slate-400 space-y-1.5">
-                    <div class="flex justify-between text-[11px]">
-                        <span class="text-slate-500">Placa</span>
-                        <span id="ab-placa" class="font-black text-sm uppercase">ABC-123</span>
+                <div class="py-2 border-b border-dashed border-slate-400 space-y-2">
+                    <div class="flex justify-between items-center">
+                        <span class="text-[13px] font-bold text-slate-500">Placa</span>
+                        <span id="ab-placa" class="text-[18px] font-black uppercase tracking-wider">ABC-123</span>
                     </div>
-                    <div class="flex justify-between text-[11px]">
-                        <span class="text-slate-500">Fecha Pago</span>
-                        <span id="ab-fecha-pago" class="font-bold">--/--/--</span>
+                    <div class="flex justify-between items-center">
+                        <span class="text-[13px] font-bold text-slate-500">Fecha Pago</span>
+                        <span id="ab-fecha-pago" class="text-[15px] font-black">--/--/--</span>
                     </div>
-                    <div class="flex justify-between text-[11px]">
-                        <span class="text-slate-500">Vence el</span>
-                        <span id="ab-fecha-vence" class="font-bold text-blue-600">--/--/--</span>
+                    <div class="flex justify-between items-center">
+                        <span class="text-[13px] font-bold text-slate-500">Vence el</span>
+                        <span id="ab-fecha-vence" class="text-[15px] font-black">--/--/--</span>
                     </div>
-                    <div class="flex justify-between text-[11px]">
-                        <span class="text-slate-500">Vigencia</span>
-                        <span class="font-bold">31 días</span>
-                    </div>
-                </div>
-                <div class="py-3 border-b border-dashed border-slate-400">
-                    <div class="flex justify-between items-center text-[13px]">
-                        <span class="font-black uppercase">Mensualidad</span>
-                        <span class="font-black text-base">S/ 450.00</span>
+                    <div class="flex justify-between items-center">
+                        <span class="text-[13px] font-bold text-slate-500">Vigencia</span>
+                        <span class="text-[14px] font-black">31 días</span>
                     </div>
                 </div>
-                <div class="pt-3 text-center">
-                    <p class="text-[9px] font-black uppercase">Abono Mensual Renovado</p>
-                    <p class="text-[8px] text-slate-600 mt-1">Válido solo para la placa indicada. No transferible.</p>
+                <div class="py-2 border-b border-dashed border-slate-400">
+                    <div class="flex justify-between items-center">
+                        <span class="text-[15px] font-black uppercase">Mensualidad</span>
+                        <span class="text-[20px] font-black">S/ 450.00</span>
+                    </div>
+                </div>
+                <div class="pt-2 text-center">
+                    <p class="text-[10px] font-black uppercase">Abono Mensual Renovado — 31 días</p>
+                    <p class="text-[9px] text-slate-500 mt-1">Válido solo para la placa indicada. No transferible.</p>
                 </div>
             </div>
             <button onclick="imprimirAbonadoFinal()" class="w-full mt-5 py-3 bg-blue-800 text-white rounded-2xl font-black shadow-lg uppercase text-sm">Imprimir</button>
