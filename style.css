@@ -64,32 +64,49 @@ input[type="number"]:focus {
 @media print {
     * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     body > aside,
-    body > main,
-    #apartado-ticket .mt-6,
-    #apartado-boleta .mt-6 { display: none !important; }
+    body > main { display: none !important; }
+
     #apartado-ticket,
-    #apartado-boleta {
+    #apartado-boleta,
+    #apartado-plana,
+    #apartado-abonado {
+        display: none !important;
+    }
+
+    #apartado-ticket:not(.hidden),
+    #apartado-boleta:not(.hidden),
+    #apartado-plana:not(.hidden),
+    #apartado-abonado:not(.hidden) {
+        display: flex !important;
         position: static !important;
         background: white !important;
-        display: flex !important;
-        align-items: center;
-        justify-content: center;
+        align-items: flex-start !important;
+        justify-content: center !important;
         padding: 0 !important;
         inset: auto !important;
     }
+
+    #apartado-ticket > div,
+    #apartado-boleta > div,
+    #apartado-plana > div,
+    #apartado-abonado > div {
+        box-shadow: none !important;
+        border: none !important;
+        padding: 0 !important;
+        max-width: 100% !important;
+        border-radius: 0 !important;
+    }
+
     #ticket-imprimible,
-    #boleta-imprimible {
-        width: 72mm;
+    #boleta-imprimible,
+    #plana-imprimible,
+    #abonado-imprimible {
+        width: 80mm !important;
         margin: 0 auto;
         border: none !important;
         box-shadow: none !important;
         font-size: 11px;
     }
-    #apartado-ticket > div,
-    #apartado-boleta > div {
-        box-shadow: none !important;
-        border: none !important;
-        padding: 0 !important;
-        max-width: 100% !important;
-    }
+
+    button { display: none !important; }
 }
